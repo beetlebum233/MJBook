@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MJBook</string>
+    <string name="title_activity_tally_list">MJBook</string>
 </resources>

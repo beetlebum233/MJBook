@@ -1,4 +1,4 @@
-package cn.mister.mjbook.model;
+package cn.mister.mjbook.data;
 
 import java.util.Date;
 
