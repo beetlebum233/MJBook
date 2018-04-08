@@ -14,4 +14,52 @@ public class Tally extends RealmObject {
     private Date createdTime;
     private String note;
     private RealmList<TallyTag> tags;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public Boolean getIncome() {
+        return isIncome;
+    }
+
+    public void setIncome(Boolean income) {
+        isIncome = income;
+    }
+
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public RealmList<TallyTag> getTags() {
+        return tags;
+    }
+
+    public void setTags(RealmList<TallyTag> tags) {
+        this.tags = tags;
+    }
 }
