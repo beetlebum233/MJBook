@@ -15,10 +15,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.mister.mjbook.BaseView;
 import cn.mister.mjbook.R;
 import cn.mister.mjbook.data.Tally;
 
-public class TallyListActivity extends AppCompatActivity {
+public class TallyListActivity extends AppCompatActivity implements TallyListContract.TallyListView {
 
     @BindView(R.id.sp_type_selector)
     public Spinner typeSpinner;
@@ -28,6 +29,10 @@ public class TallyListActivity extends AppCompatActivity {
 
     @BindView(R.id.rv_tally_list)
     public RecyclerView tallyListView;
+
+    private TallyListContract.TallyListPresenter mPresenter;
+
+    private TallyItemAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +54,17 @@ public class TallyListActivity extends AppCompatActivity {
         List<Tally> list = new ArrayList<>();
         list.add(new Tally());
         tallyListView.setLayoutManager(new LinearLayoutManager(this));
-        tallyListView.setAdapter(new TallyItemAdapter(this, list));
+        mAdapter = new TallyItemAdapter(this, list);
+        tallyListView.setAdapter(mAdapter);
     }
 
+    @Override
+    public void setPresenter(TallyListContract.TallyListPresenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void showTallies(List<Tally> tallies) {
+
+    }
 }

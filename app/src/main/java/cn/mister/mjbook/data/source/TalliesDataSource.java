@@ -7,7 +7,7 @@ import java.util.List;
 
 import cn.mister.mjbook.data.Tally;
 import cn.mister.mjbook.data.TallyTag;
-import cn.mister.mjbook.data.TallyType;
+import cn.mister.mjbook.tallylist.TallyType;
 
 public interface TalliesDataSource {
     interface LoadTalliesCallback{

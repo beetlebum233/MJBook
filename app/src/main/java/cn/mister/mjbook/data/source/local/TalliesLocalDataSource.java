@@ -9,10 +9,9 @@ import java.util.UUID;
 
 import cn.mister.mjbook.data.Tally;
 import cn.mister.mjbook.data.TallyTag;
-import cn.mister.mjbook.data.TallyType;
+import cn.mister.mjbook.tallylist.TallyType;
 import cn.mister.mjbook.data.source.TalliesDataSource;
 import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
