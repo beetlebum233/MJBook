@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import cn.mister.mjbook.R;
@@ -36,9 +38,22 @@ public class TallyItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Tally tally = tallies.get(position);
         TallyViewHolder tallyHolder = (TallyViewHolder)holder;
+        String amountStr = "";
+        if(!tally.getIncome()){
+            amountStr += "-";
+        }
+        DecimalFormat df = new DecimalFormat("0.00");
+        amountStr += df.format(tally.getAmount());
+        tallyHolder.amountView.setText(amountStr);
+
+        SimpleDateFormat dd = new SimpleDateFormat("yyyy-MM-dd");
+        String dateStr = dd.format(tally.getCreatedTime());
+        tallyHolder.timeView.setText(dateStr);
+
+        tallyHolder.noteView.setText(tally.getNote());
 
         RelativeLayout basicInfoLayout = tallyHolder.basicInfoLayout;
-        final LinearLayout noteView = tallyHolder.noteView;
+        final LinearLayout noteView = tallyHolder.noteLayout;
         basicInfoLayout.setOnClickListener(new View.OnClickListener() {
 
             boolean isAnimating = false;

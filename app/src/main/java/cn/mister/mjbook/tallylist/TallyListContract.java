@@ -15,5 +15,7 @@ public interface TallyListContract {
 
     interface TallyListPresenter extends BasePresenter{
         void addTally();
+
+        void reload();
     }
 }

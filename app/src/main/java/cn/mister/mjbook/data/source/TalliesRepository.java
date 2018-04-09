@@ -28,7 +28,7 @@ public class TalliesRepository implements TalliesDataSource{
 
     @Override
     public void getAllTallies(@NonNull LoadTalliesCallback callback) {
-
+        localDataSource.getAllTallies(callback);
     }
 
     @Override

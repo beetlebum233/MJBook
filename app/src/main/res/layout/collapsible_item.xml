@@ -13,21 +13,43 @@
         android:paddingTop="@dimen/activity_vertical_margin">
 
         <TextView
+            android:id="@+id/tv_time"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:gravity="left"
-            android:text="点击下面的箭头可以折叠放开View"/>
+            android:textSize="18sp"
+            android:text="2018-04-08"/>
+
+        <TextView
+            android:id="@+id/tv_tags"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center_horizontal"
+            android:textSize="18sp"
+            android:text="吃饭"/>
+
+
+        <TextView
+            android:id="@+id/tv_amount"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="right|top"
+            android:textSize="18sp"
+            android:text="-32.00"/>
+
+
 
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/note"
+        android:id="@+id/layout_note"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="gone">
 
         <TextView
+            android:id="@+id/tv_note"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="left"

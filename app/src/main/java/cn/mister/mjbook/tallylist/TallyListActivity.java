@@ -2,15 +2,15 @@ package cn.mister.mjbook.tallylist;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.EventLog;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -22,10 +22,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.mister.mjbook.BaseView;
 import cn.mister.mjbook.R;
 import cn.mister.mjbook.addtally.AddTallyActivity;
 import cn.mister.mjbook.data.Tally;
+import cn.mister.mjbook.data.source.TalliesRepository;
 import cn.mister.mjbook.event.TalliesChangeEvent;
 
 public class TallyListActivity extends AppCompatActivity implements TallyListContract.TallyListView {
@@ -41,7 +41,9 @@ public class TallyListActivity extends AppCompatActivity implements TallyListCon
 
     private TallyListContract.TallyListPresenter mPresenter;
 
-    private TallyItemAdapter mAdapter;
+    private TallyItemAdapter tallyItemAdapter;
+
+    private ArrayAdapter<String> typeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,24 +51,39 @@ public class TallyListActivity extends AppCompatActivity implements TallyListCon
         setContentView(R.layout.activity_tally_list);
         ButterKnife.bind(this);
 
-        mPresenter = new TallyListPresenter(this);
+        mPresenter = new TallyListPresenter(this, TalliesRepository.getInstance());
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         List<Tally> list = new ArrayList<>();
-        list.add(new Tally());
-        list.add(new Tally());
         tallyListView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new TallyItemAdapter(this, list);
-        tallyListView.setAdapter(mAdapter);
+        tallyItemAdapter = new TallyItemAdapter(this, list);
+        tallyListView.setAdapter(tallyItemAdapter);
+        String types[] = {"全部","收入","支出"};
+
+        typeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeSpinner.setAdapter(typeAdapter);
+        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                Toast.makeText(TallyListActivity.this, typeAdapter.getItem(position), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        mPresenter.start();
     }
 
     @Override
     public void showTallies(List<Tally> tallies) {
-        mAdapter.setData(tallies);
-        mAdapter.notifyDataSetChanged();
+        tallyItemAdapter.setData(tallies);
+        tallyItemAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -101,6 +118,6 @@ public class TallyListActivity extends AppCompatActivity implements TallyListCon
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(TalliesChangeEvent event) {
-
+        mPresenter.reload();
     }
 }
