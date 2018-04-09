@@ -9,6 +9,8 @@ import cn.mister.mjbook.data.Tally;
 public interface TallyListContract {
     interface TallyListView extends BaseView<TallyListPresenter>{
         void showTallies(List<Tally> tallies);
+
+        void showAddTally();
     }
 
     interface TallyListPresenter extends BasePresenter{

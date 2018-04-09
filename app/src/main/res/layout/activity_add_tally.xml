@@ -29,33 +29,48 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
-        <LinearLayout
-            android:id="@+id/layout_selectors"
+
+
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/tf_tally_type"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/sp_type_selector"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:max_select="1">
 
-            </android.support.v7.widget.AppCompatSpinner>
+        </com.zhy.view.flowlayout.TagFlowLayout>
 
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/sp_time_selector"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </android.support.v7.widget.AppCompatSpinner>
-        </LinearLayout>
-
-
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_tally_list"
+        <EditText
+            android:id="@+id/et_amount"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:hint="Amount"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
-        </android.support.v7.widget.RecyclerView>
+        <EditText
+            android:id="@+id/et_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Time"
+            android:maxLines="1"
+            android:focusable="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/tf_tally_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:max_select="1">
+
+        </com.zhy.view.flowlayout.TagFlowLayout>
+
+        <EditText
+            android:id="@+id/et_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Note"
+            android:maxLines="3"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
     </LinearLayout>
 
@@ -65,6 +80,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_add"/>
+        android:src="@drawable/ic_done"/>
 
 </android.support.design.widget.CoordinatorLayout>

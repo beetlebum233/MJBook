@@ -27,7 +27,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".addtally.AddTallyActivity"/>
+        <activity android:name=".addtally.AddTallyActivity"
+            android:label="@string/title_activity_tally_list"/>
     </application>
 
 </manifest>

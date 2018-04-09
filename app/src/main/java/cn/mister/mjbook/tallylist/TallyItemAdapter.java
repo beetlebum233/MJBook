@@ -98,4 +98,8 @@ public class TallyItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public int getItemCount() {
         return tallies.size();
     }
+
+    public void setData(List<Tally> data){
+        this.tallies = data;
+    }
 }

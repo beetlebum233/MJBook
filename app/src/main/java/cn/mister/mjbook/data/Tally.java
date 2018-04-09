@@ -9,7 +9,7 @@ import io.realm.annotations.PrimaryKey;
 public class Tally extends RealmObject {
     @PrimaryKey
     private String id;
-    private Integer amount;
+    private Double amount;
     private Boolean isIncome;
     private Date createdTime;
     private String note;
@@ -23,11 +23,11 @@ public class Tally extends RealmObject {
         this.id = id;
     }
 
-    public Integer getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 

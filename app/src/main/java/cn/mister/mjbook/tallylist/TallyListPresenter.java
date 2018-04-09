@@ -1,8 +1,13 @@
 package cn.mister.mjbook.tallylist;
 
-import cn.mister.mjbook.BasePresenter;
-
 public class TallyListPresenter implements TallyListContract.TallyListPresenter {
+
+    private TallyListContract.TallyListView mView;
+
+    public TallyListPresenter(TallyListContract.TallyListView mView) {
+        this.mView = mView;
+    }
+
     @Override
     public void start() {
 
@@ -10,6 +15,6 @@ public class TallyListPresenter implements TallyListContract.TallyListPresenter 
 
     @Override
     public void addTally() {
-
+        mView.showAddTally();
     }
 }

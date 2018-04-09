@@ -33,7 +33,7 @@ public class TalliesLocalDataSource implements TalliesDataSource{
 
     @Override
     public void getAllTallies(@NonNull LoadTalliesCallback callback) {
-        RealmResults<Tally> results = realm.where(Tally.class).sort("createdTime", Sort.DESCENDING).findAll();
+        RealmResults<Tally> results = realm.where(Tally.class).findAllSorted("createdTime", Sort.DESCENDING);
         List<Tally> list = realm.copyFromRealm(results);
         Handler handler = new Handler();
         handler.post(() -> callback.onTalliesLoaded(list));

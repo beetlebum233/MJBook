@@ -7,4 +7,5 @@ public class TallyTag extends RealmObject{
     @PrimaryKey
     private String id;
     private String name;
+    private Boolean isIncome;
 }
