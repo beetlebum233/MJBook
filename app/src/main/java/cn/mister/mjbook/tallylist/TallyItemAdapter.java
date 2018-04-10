@@ -17,6 +17,7 @@ import java.util.List;
 
 import cn.mister.mjbook.R;
 import cn.mister.mjbook.data.Tally;
+import cn.mister.mjbook.data.TallyTag;
 
 public class TallyItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -51,6 +52,12 @@ public class TallyItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         tallyHolder.timeView.setText(dateStr);
 
         tallyHolder.noteView.setText(tally.getNote());
+
+        if(tally.getTags() != null && !tally.getTags().isEmpty()){
+            for(TallyTag tag : tally.getTags()){
+                tallyHolder.tagsView.setText(tag.getName());
+            }
+        }
 
         RelativeLayout basicInfoLayout = tallyHolder.basicInfoLayout;
         final LinearLayout noteView = tallyHolder.noteLayout;

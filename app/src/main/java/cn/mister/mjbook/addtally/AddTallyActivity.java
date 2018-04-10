@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,11 +36,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.mister.mjbook.R;
 import cn.mister.mjbook.data.Tally;
+import cn.mister.mjbook.data.TallyTag;
 import cn.mister.mjbook.data.source.TalliesRepository;
+import cn.mister.mjbook.data.source.TallyTagsRepository;
 import cn.mister.mjbook.event.TalliesChangeEvent;
 import cn.mister.mjbook.exception.InputInvalidException;
+import io.realm.RealmList;
 
-public class AddTallyActivity extends Activity implements AddTallyContract.AddTallyView {
+public class AddTallyActivity extends AppCompatActivity implements AddTallyContract.AddTallyView {
 
     @BindView(R.id.tf_tally_type)
     TagFlowLayout tallyTypeView;
@@ -65,13 +69,15 @@ public class AddTallyActivity extends Activity implements AddTallyContract.AddTa
 
     private List<Boolean> isIncome;
 
+    private List<TallyTag> tagList;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tally);
         ButterKnife.bind(this);
 
-        mPresenter = new AddTallyPresenter(this, TalliesRepository.getInstance());
+        mPresenter = new AddTallyPresenter(this, TalliesRepository.getInstance(), TallyTagsRepository.getInstance());
 
         mInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -93,6 +99,9 @@ public class AddTallyActivity extends Activity implements AddTallyContract.AddTa
                 return tv;
             }
         });
+
+        mPresenter.getTags();
+
     }
 
     @Override
@@ -125,6 +134,14 @@ public class AddTallyActivity extends Activity implements AddTallyContract.AddTa
         }catch(NumberFormatException e){
             throw new RuntimeException("金额格式不正确");
         }
+        Set<Integer> tagSet = tallyTagsView.getSelectedList();
+        if(!tagSet.isEmpty()){
+            for(Integer i : tagSet){
+                RealmList<TallyTag> list = new RealmList<>();
+                list.add(tagList.get(i));
+                tally.setTags(list);
+            }
+        }
         if("".equals(timeView.getText().toString())){
             tally.setCreatedTime(new Date());
         }else{
@@ -143,6 +160,22 @@ public class AddTallyActivity extends Activity implements AddTallyContract.AddTa
     public void showMsg(String msg) {
         Snackbar.make(fab, msg, Snackbar.LENGTH_SHORT)
                 .setAction("Action", null).show();
+    }
+
+    @Override
+    public void setTags(List<TallyTag> tags) {
+        tagList = tags;
+        tallyTagsView.setAdapter(new TagAdapter<TallyTag>(tags)
+        {
+            @Override
+            public View getView(FlowLayout parent, int position, TallyTag tag)
+            {
+                TextView tv = (TextView)mInflater.inflate(R.layout.common_tag_btn,
+                        tallyTypeView, false);
+                tv.setText(tag.getName());
+                return tv;
+            }
+        });
     }
 
     @OnClick(R.id.fab)

@@ -79,7 +79,7 @@ public class TalliesLocalDataSource implements TalliesDataSource{
         tally.setId(UUID.randomUUID().toString());
 
         realm.beginTransaction();
-        realm.copyToRealm(tally);
+        realm.copyToRealmOrUpdate(tally);
         realm.commitTransaction();
     }
 

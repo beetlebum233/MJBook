@@ -17,7 +17,7 @@ public class MyApplication extends Application{
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .schemaVersion(0)
-                .deleteRealmIfMigrationNeeded()
+//                .deleteRealmIfMigrationNeeded()
                 .build();
         Realm.setDefaultConfiguration(config);
         Stetho.initialize(

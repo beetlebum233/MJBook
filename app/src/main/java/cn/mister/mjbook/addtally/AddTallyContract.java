@@ -1,8 +1,11 @@
 package cn.mister.mjbook.addtally;
 
+import java.util.List;
+
 import cn.mister.mjbook.BasePresenter;
 import cn.mister.mjbook.BaseView;
 import cn.mister.mjbook.data.Tally;
+import cn.mister.mjbook.data.TallyTag;
 import cn.mister.mjbook.exception.InputInvalidException;
 
 public interface AddTallyContract {
@@ -15,11 +18,15 @@ public interface AddTallyContract {
 
         void showMsg(String msg);
 
+        void setTags(List<TallyTag> tags);
+
     }
 
     interface AddTallyPresenter extends BasePresenter{
         void saveTally();
 
         void populate();
+
+        void getTags();
     }
 }

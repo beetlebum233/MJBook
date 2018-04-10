@@ -37,6 +37,7 @@ import cn.mister.mjbook.addtally.AddTallyActivity;
 import cn.mister.mjbook.data.Tally;
 import cn.mister.mjbook.data.source.TalliesRepository;
 import cn.mister.mjbook.event.TalliesChangeEvent;
+import cn.mister.mjbook.taglist.TagListActivity;
 
 public class TallyListActivity extends AppCompatActivity implements TallyListContract.TallyListView {
 
@@ -146,6 +147,9 @@ public class TallyListActivity extends AppCompatActivity implements TallyListCon
             case R.id.menu_statistics:
                 break;
             case R.id.menu_tags:
+                Intent intent = new Intent();
+                intent.setClass(this, TagListActivity.class);
+                startActivity(intent);
                 break;
             case R.id.menu_about:
                 break;

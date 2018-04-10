@@ -28,7 +28,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".addtally.AddTallyActivity"
-            android:label="@string/title_activity_tally_list"/>
+            android:label="@string/title_activity_add_tally"/>
+        <activity android:name=".taglist.TagListActivity"
+            android:label="@string/title_activity_tag_list"/>
     </application>
 
 </manifest>

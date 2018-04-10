@@ -34,13 +34,18 @@ public class TallyTagsLocalDataSource implements TallyTagsDataSource{
         tag.setId(UUID.randomUUID().toString());
 
         realm.beginTransaction();
-        realm.copyToRealm(tag);
+        realm.copyToRealmOrUpdate(tag);
         realm.commitTransaction();
     }
 
     @Override
     public void deleteTallyTagById(@NonNull String tagId) {
-
+        realm.beginTransaction();
+        TallyTag tag = realm.where(TallyTag.class).equalTo("id", tagId).findFirst();
+        if(tag != null){
+            tag.deleteFromRealm();
+        }
+        realm.commitTransaction();
     }
 
     @Override

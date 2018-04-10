@@ -4,21 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".tallylist.TallyListActivity">
-
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
+    tools:context=".addtally.AddTallyActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,14 +42,6 @@
             android:focusable="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
-        <com.zhy.view.flowlayout.TagFlowLayout
-            android:id="@+id/tf_tally_tag"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:max_select="1">
-
-        </com.zhy.view.flowlayout.TagFlowLayout>
-
         <EditText
             android:id="@+id/et_note"
             android:layout_width="match_parent"
@@ -71,6 +49,21 @@
             android:hint="Note"
             android:maxLines="3"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <TextView
+            android:id="@+id/tv_tag_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="标签："
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/tf_tally_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:max_select="1">
+
+        </com.zhy.view.flowlayout.TagFlowLayout>
 
     </LinearLayout>
 

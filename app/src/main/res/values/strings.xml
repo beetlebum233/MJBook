@@ -2,4 +2,5 @@
     <string name="app_name">MJBook</string>
     <string name="title_activity_tally_list">MJBook</string>
     <string name="title_activity_add_tally">Add Tally</string>
+    <string name="title_activity_tag_list">Tags</string>
 </resources>

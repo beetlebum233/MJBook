@@ -27,7 +27,7 @@ public class TallyTagsRepository implements TallyTagsDataSource {
 
     @Override
     public void deleteTallyTagById(@NonNull String tagId) {
-
+        localDataSource.deleteTallyTagById(tagId);
     }
 
     @Override
