@@ -6,17 +6,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -33,8 +43,8 @@ public class TallyListActivity extends AppCompatActivity implements TallyListCon
     @BindView(R.id.sp_type_selector)
     public Spinner typeSpinner;
 
-    @BindView(R.id.sp_time_selector)
-    public Spinner timeSpinner;
+    @BindView(R.id.tv_time_selector)
+    public TextView timeSelector;
 
     @BindView(R.id.rv_tally_list)
     public RecyclerView tallyListView;
@@ -69,7 +79,8 @@ public class TallyListActivity extends AppCompatActivity implements TallyListCon
         typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                Toast.makeText(TallyListActivity.this, typeAdapter.getItem(position), Toast.LENGTH_SHORT).show();
+                String typeStr = typeAdapter.getItem(position);
+                mPresenter.changeType(TallyType.getTallyType(typeStr));
             }
 
             @Override
@@ -78,6 +89,14 @@ public class TallyListActivity extends AppCompatActivity implements TallyListCon
             }
         });
         mPresenter.start();
+
+        timeSelector.setOnClickListener((v) -> {
+            TimePickerView pvTime = new TimePickerBuilder(this,
+                    (date, v1) -> mPresenter.changeTime(date))
+                    .setType(new boolean[]{true, true, false, false, false, false})
+                    .build();
+            pvTime.show();
+        });
     }
 
     @Override
@@ -119,5 +138,25 @@ public class TallyListActivity extends AppCompatActivity implements TallyListCon
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(TalliesChangeEvent event) {
         mPresenter.reload();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_statistics:
+                break;
+            case R.id.menu_tags:
+                break;
+            case R.id.menu_about:
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.tally_list_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }

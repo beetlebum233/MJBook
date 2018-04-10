@@ -1,5 +1,6 @@
 package cn.mister.mjbook.tallylist;
 
+import java.util.Date;
 import java.util.List;
 
 import cn.mister.mjbook.data.Tally;
@@ -11,6 +12,10 @@ public class TallyListPresenter implements TallyListContract.TallyListPresenter,
     private TallyListContract.TallyListView mView;
 
     private TalliesRepository talliesRepository;
+
+    private TallyType currentType = TallyType.ALL;
+
+    private Date currentDateFrom = null;
 
     public TallyListPresenter(TallyListContract.TallyListView mView, TalliesRepository talliesRepository) {
         this.mView = mView;
@@ -29,7 +34,19 @@ public class TallyListPresenter implements TallyListContract.TallyListPresenter,
 
     @Override
     public void reload() {
-        talliesRepository.getAllTallies(this);
+        talliesRepository.getTalliesByCondition(this, currentType, currentDateFrom, null);
+    }
+
+    @Override
+    public void changeType(TallyType type) {
+        currentType = type;
+        reload();
+    }
+
+    @Override
+    public void changeTime(Date date) {
+        currentDateFrom = date;
+        reload();
     }
 
     @Override

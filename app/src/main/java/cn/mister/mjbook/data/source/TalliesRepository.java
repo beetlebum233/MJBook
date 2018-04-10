@@ -33,7 +33,7 @@ public class TalliesRepository implements TalliesDataSource{
 
     @Override
     public void getTalliesByCondition(@NonNull LoadTalliesCallback callback, @NonNull TallyType tallyType, Date date, List<TallyTag> tags) {
-
+        localDataSource.getTalliesByCondition(callback, tallyType, date, tags);
     }
 
     @Override
