@@ -22,5 +22,7 @@ public interface TallyListContract {
         void changeType(TallyType type);
 
         void changeTime(Date date);
+
+        void delete(String tallyId);
     }
 }

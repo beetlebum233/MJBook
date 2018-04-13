@@ -48,7 +48,7 @@ public class TalliesRepository implements TalliesDataSource{
 
     @Override
     public void deleteTally(@NonNull String tallyId) {
-
+        localDataSource.deleteTally(tallyId);
     }
 
     @Override

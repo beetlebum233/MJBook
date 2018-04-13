@@ -50,6 +50,12 @@ public class TallyListPresenter implements TallyListContract.TallyListPresenter,
     }
 
     @Override
+    public void delete(String tallyId) {
+        talliesRepository.deleteTally(tallyId);
+        reload();
+    }
+
+    @Override
     public void onTalliesLoaded(List<Tally> tallies) {
         mView.showTallies(tallies);
     }

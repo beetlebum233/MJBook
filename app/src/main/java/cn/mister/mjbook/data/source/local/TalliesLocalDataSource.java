@@ -68,6 +68,18 @@ public class TalliesLocalDataSource implements TalliesDataSource{
             Date dateTo = calendar.getTime();
             query.between("createdTime", dateFrom, dateTo);
         }
+        if(tags != null && !tags.isEmpty()){
+            for(int i = 0; i < tags.size(); i++){
+                TallyTag tag = tags.get(i);
+                if(tag.getId() == null){
+                    continue;
+                }
+                if(i != 0){
+                    query.or();
+                }
+                query.equalTo("tags.id", tag.getId());
+            }
+        }
         RealmResults<Tally> results = query.sort("createdTime", Sort.DESCENDING).findAll();
         List<Tally> list = realm.copyFromRealm(results);
         Handler handler = new Handler();
@@ -90,7 +102,12 @@ public class TalliesLocalDataSource implements TalliesDataSource{
 
     @Override
     public void deleteTally(@NonNull String tallyId) {
-
+        realm.beginTransaction();
+        Tally tally = realm.where(Tally.class).equalTo("id", tallyId).findFirst();
+        if(tally != null){
+            tally.deleteFromRealm();
+        }
+        realm.commitTransaction();
     }
 
     @Override

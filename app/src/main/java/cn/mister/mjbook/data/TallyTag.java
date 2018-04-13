@@ -32,4 +32,9 @@ public class TallyTag extends RealmObject{
     public void setIncome(Boolean income) {
         isIncome = income;
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

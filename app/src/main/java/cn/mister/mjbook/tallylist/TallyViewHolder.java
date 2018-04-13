@@ -29,6 +29,9 @@ public class TallyViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.tv_note)
     TextView noteView;
 
+    @BindView(R.id.collapsible_item)
+    LinearLayout mainLayout;
+
     public TallyViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);

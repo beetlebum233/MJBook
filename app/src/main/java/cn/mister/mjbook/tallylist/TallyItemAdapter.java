@@ -3,6 +3,7 @@ package cn.mister.mjbook.tallylist;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,10 +24,12 @@ public class TallyItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private List<Tally> tallies;
     private Context context;
+    private TallyListContract.TallyListPresenter mPresenter;
 
-    public TallyItemAdapter(Context context, List<Tally> tallies) {
+    public TallyItemAdapter(Context context, List<Tally> tallies, TallyListContract.TallyListPresenter mPresenter) {
         this.tallies = tallies;
         this.context = context;
+        this.mPresenter = mPresenter;
     }
 
     @Override
@@ -38,9 +41,9 @@ public class TallyItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Tally tally = tallies.get(position);
-        TallyViewHolder tallyHolder = (TallyViewHolder)holder;
+        TallyViewHolder tallyHolder = (TallyViewHolder) holder;
         String amountStr = "";
-        if(!tally.getIncome()){
+        if (!tally.getIncome()) {
             amountStr += "-";
         }
         DecimalFormat df = new DecimalFormat("0.00");
@@ -53,10 +56,12 @@ public class TallyItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         tallyHolder.noteView.setText(tally.getNote());
 
-        if(tally.getTags() != null && !tally.getTags().isEmpty()){
-            for(TallyTag tag : tally.getTags()){
+        if (tally.getTags() != null && !tally.getTags().isEmpty()) {
+            for (TallyTag tag : tally.getTags()) {
                 tallyHolder.tagsView.setText(tag.getName());
             }
+        }else{
+            tallyHolder.tagsView.setText("无标签");
         }
 
         RelativeLayout basicInfoLayout = tallyHolder.basicInfoLayout;
@@ -64,6 +69,7 @@ public class TallyItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         basicInfoLayout.setOnClickListener(new View.OnClickListener() {
 
             boolean isAnimating = false;
+
             @Override
             public void onClick(View v) {
                 if (isAnimating) return;
@@ -75,6 +81,7 @@ public class TallyItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     animateClose(noteView);
                 }
             }
+
             private void animateOpen(LinearLayout view) {
                 view.setVisibility(View.VISIBLE);
                 ValueAnimator animator = createDropAnimator(view, 0, 50);
@@ -114,6 +121,33 @@ public class TallyItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 return animator;
             }
         });
+
+        tallyHolder.basicInfoLayout.setOnLongClickListener((listener) -> {
+            final AlertDialog.Builder normalDialog =
+                    new AlertDialog.Builder(context);
+            normalDialog.setTitle("是否确认删除该记录？");
+            normalDialog.setPositiveButton("确定",
+                    (dialog, which) -> mPresenter.delete(tally.getId()));
+            normalDialog.setNegativeButton("关闭",
+                    (dialog, which) -> {
+                    });
+            normalDialog.show();
+            return true;
+        });
+
+        tallyHolder.noteLayout.setOnLongClickListener((listener) -> {
+            final AlertDialog.Builder normalDialog =
+                    new AlertDialog.Builder(context);
+            normalDialog.setTitle("是否确认删除该记录？");
+            normalDialog.setPositiveButton("确定",
+                    (dialog, which) -> mPresenter.delete(tally.getId()));
+            normalDialog.setNegativeButton("关闭",
+                    (dialog, which) -> {
+                    });
+            normalDialog.show();
+            return true;
+        });
+
     }
 
     @Override
@@ -121,7 +155,7 @@ public class TallyItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return tallies.size();
     }
 
-    public void setData(List<Tally> data){
+    public void setData(List<Tally> data) {
         this.tallies = data;
     }
 }

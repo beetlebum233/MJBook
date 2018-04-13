@@ -38,16 +38,18 @@ public class TallyTagAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TallyTagViewHolder viewHolder = (TallyTagViewHolder) holder;
         viewHolder.textView.setText(tag.getName());
         viewHolder.textView.setOnLongClickListener((listener) -> {
-            final AlertDialog.Builder normalDialog =
-                    new AlertDialog.Builder(context);
-            normalDialog.setTitle("是否确认删除该标签？");
-            normalDialog.setPositiveButton("确定",
-                    (dialog, which) -> mPresenter.delete(tag.getId()));
-            normalDialog.setNegativeButton("关闭",
-                    (dialog, which) -> {});
-            normalDialog.show();
-            return true;
-        });
+                final AlertDialog.Builder normalDialog =
+                        new AlertDialog.Builder(context);
+                normalDialog.setTitle("是否确认删除该标签？");
+                normalDialog.setPositiveButton("确定",
+                        (dialog, which) -> mPresenter.delete(tag.getId()));
+                normalDialog.setNegativeButton("关闭",
+                        (dialog, which) -> {
+                        });
+                normalDialog.show();
+                return true;
+            }
+        );
     }
 
     @Override
@@ -55,7 +57,7 @@ public class TallyTagAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return tags.size();
     }
 
-    public void setData(List<TallyTag> data){
+    public void setData(List<TallyTag> data) {
         this.tags = data;
     }
 }

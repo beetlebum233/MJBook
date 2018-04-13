@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">MJBook</string>
     <string name="title_activity_tally_list">MJBook</string>
-    <string name="title_activity_add_tally">Add Tally</string>
-    <string name="title_activity_tag_list">Tags</string>
+    <string name="title_activity_add_tally">添加</string>
+    <string name="title_activity_tag_list">标签</string>
+    <string name="title_activity_statistics">统计</string>
+    <string name="title_activity_about">关于</string>
 </resources>
