@@ -109,15 +109,16 @@ public class TallyListActivity extends AppCompatActivity implements TallyListCon
     }
 
     @Override
-    public void showAddTally() {
+    public void showAddTally(String tallyId) {
         Intent intent = new Intent();
         intent.setClass(this, AddTallyActivity.class);
+        intent.putExtra("tallyId", tallyId);
         startActivity(intent);
     }
 
     @OnClick(R.id.fab)
     public void onFabClick(){
-        mPresenter.addTally();
+        mPresenter.addTally(null);
     }
 
     @Override

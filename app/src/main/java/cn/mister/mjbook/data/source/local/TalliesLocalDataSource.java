@@ -43,6 +43,14 @@ public class TalliesLocalDataSource implements TalliesDataSource{
     }
 
     @Override
+    public void getTallyById(@NonNull GetTallyCallback callback, String tallyId) {
+        Tally result = realm.where(Tally.class).equalTo("id", tallyId).findFirst();
+        Tally tally = realm.copyFromRealm(result);
+        Handler handler = new Handler();
+        handler.post(() -> callback.onTallyLoaded(tally));
+    }
+
+    @Override
     public void getTalliesByCondition(@NonNull LoadTalliesCallback callback, @NonNull TallyType tallyType, Date dateFrom, List<TallyTag> tags) {
         RealmQuery<Tally> query = realm.where(Tally.class);
         switch (tallyType){
@@ -97,7 +105,9 @@ public class TalliesLocalDataSource implements TalliesDataSource{
 
     @Override
     public void updateTally(@NonNull String tallyId, @NonNull Tally tally) {
-
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(tally);
+        realm.commitTransaction();
     }
 
     @Override

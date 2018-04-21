@@ -15,10 +15,12 @@ public interface TalliesDataSource {
     }
 
     interface GetTallyCallback{
-        void onTallyLoaded();
+        void onTallyLoaded(Tally tally);
     }
 
     void getAllTallies(@NonNull LoadTalliesCallback callback);
+
+    void getTallyById(@NonNull GetTallyCallback callback, String tallyId);
 
     void getTalliesByCondition(@NonNull LoadTalliesCallback callback, @NonNull TallyType tallyType, Date date, List<TallyTag> tags);
 

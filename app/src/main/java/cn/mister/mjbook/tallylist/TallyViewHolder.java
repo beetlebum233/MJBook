@@ -2,6 +2,7 @@ package cn.mister.mjbook.tallylist;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,6 +32,9 @@ public class TallyViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.collapsible_item)
     LinearLayout mainLayout;
+
+    @BindView(R.id.bt_modify)
+    Button btnModify;
 
     public TallyViewHolder(View itemView) {
         super(itemView);

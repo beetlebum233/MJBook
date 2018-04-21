@@ -2,6 +2,7 @@ package cn.mister.mjbook.addtally;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -24,10 +25,12 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -71,11 +74,16 @@ public class AddTallyActivity extends AppCompatActivity implements AddTallyContr
 
     private List<TallyTag> tagList;
 
+    private String tallyId = null;
+
+    private Tally tally;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tally);
         ButterKnife.bind(this);
+
 
         mPresenter = new AddTallyPresenter(this, TalliesRepository.getInstance(), TallyTagsRepository.getInstance());
 
@@ -101,6 +109,13 @@ public class AddTallyActivity extends AppCompatActivity implements AddTallyContr
         });
 
         mPresenter.getTags();
+        Intent intent = getIntent();
+        if (intent != null) {
+            tallyId = intent.getStringExtra("tallyId");
+            if(tallyId != null){
+                mPresenter.loadTally(tallyId);
+            }
+        }
 
     }
 
@@ -117,7 +132,10 @@ public class AddTallyActivity extends AppCompatActivity implements AddTallyContr
 
     @Override
     public Tally getTally() throws InputInvalidException{
-        Tally tally = new Tally();
+        if(tally == null){
+            tally = new Tally();
+        }
+
         Set<Integer> set = tallyTypeView.getSelectedList();
         if(set.isEmpty()){
             throw new RuntimeException("请选择类型");
@@ -176,6 +194,49 @@ public class AddTallyActivity extends AppCompatActivity implements AddTallyContr
                 return tv;
             }
         });
+    }
+
+    @Override
+    public void showTally(Tally tally) {
+        if(tally != null){
+            this.tally = tally;
+            DecimalFormat df = new DecimalFormat("0.00");
+            amountView.setText(df.format(tally.getAmount()));
+
+            Set<Integer> selectedType = new HashSet<>();
+
+            if(tally.getIncome()){
+                selectedType.add(1);
+                tallyTypeView.getSelectedList();
+                tallyTypeView.getAdapter().setSelectedList(selectedType);
+
+            }else{
+                selectedType.add(0);
+                tallyTypeView.getSelectedList();
+                tallyTypeView.getAdapter().setSelectedList(selectedType);
+            }
+
+            noteView.setText(tally.getNote());
+
+            SimpleDateFormat dd = new SimpleDateFormat("yyyy-MM-dd");
+            String dateStr = dd.format(tally.getCreatedTime());
+            timeView.setText(dateStr);
+
+            if(tagList != null && !tally.getTags().isEmpty()){
+                Set<Integer> selectedTags = new HashSet<>();
+                for(TallyTag myTag : tally.getTags()){
+                    for(int i = 0; i < tagList.size(); i ++){
+                        TallyTag tag = tagList.get(i);
+                        if(myTag.getName().equals(tag.getName())){
+                            selectedTags.add(i);
+                        }
+                    }
+                }
+                tallyTagsView.getAdapter().setSelectedList(selectedTags);
+            }
+
+
+        }
     }
 
     @OnClick(R.id.fab)

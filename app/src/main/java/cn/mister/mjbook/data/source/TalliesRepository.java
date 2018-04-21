@@ -32,6 +32,11 @@ public class TalliesRepository implements TalliesDataSource{
     }
 
     @Override
+    public void getTallyById(@NonNull GetTallyCallback callback, String tallyId) {
+        localDataSource.getTallyById(callback, tallyId);
+    }
+
+    @Override
     public void getTalliesByCondition(@NonNull LoadTalliesCallback callback, @NonNull TallyType tallyType, Date date, List<TallyTag> tags) {
         localDataSource.getTalliesByCondition(callback, tallyType, date, tags);
     }
@@ -43,7 +48,7 @@ public class TalliesRepository implements TalliesDataSource{
 
     @Override
     public void updateTally(@NonNull String tallyId, @NonNull Tally tally) {
-
+        localDataSource.updateTally(tallyId, tally);
     }
 
     @Override

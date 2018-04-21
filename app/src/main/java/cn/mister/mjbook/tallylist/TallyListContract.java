@@ -11,11 +11,11 @@ public interface TallyListContract {
     interface TallyListView extends BaseView<TallyListPresenter>{
         void showTallies(List<Tally> tallies);
 
-        void showAddTally();
+        void showAddTally(String tallyId);
     }
 
     interface TallyListPresenter extends BasePresenter{
-        void addTally();
+        void addTally(String tallyId);
 
         void reload();
 

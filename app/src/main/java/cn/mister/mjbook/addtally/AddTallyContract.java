@@ -20,6 +20,8 @@ public interface AddTallyContract {
 
         void setTags(List<TallyTag> tags);
 
+        void showTally(Tally tally);
+
     }
 
     interface AddTallyPresenter extends BasePresenter{
@@ -28,5 +30,7 @@ public interface AddTallyContract {
         void populate();
 
         void getTags();
+
+        void loadTally(String tallyId);
     }
 }

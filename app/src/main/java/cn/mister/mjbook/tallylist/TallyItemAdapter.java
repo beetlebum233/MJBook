@@ -66,6 +66,7 @@ public class TallyItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         RelativeLayout basicInfoLayout = tallyHolder.basicInfoLayout;
         final LinearLayout noteView = tallyHolder.noteLayout;
+        noteView.setVisibility(View.GONE);
         basicInfoLayout.setOnClickListener(new View.OnClickListener() {
 
             boolean isAnimating = false;
@@ -84,7 +85,7 @@ public class TallyItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
             private void animateOpen(LinearLayout view) {
                 view.setVisibility(View.VISIBLE);
-                ValueAnimator animator = createDropAnimator(view, 0, 50);
+                ValueAnimator animator = createDropAnimator(view, 0, 100);
                 animator.addListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
@@ -147,6 +148,8 @@ public class TallyItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             normalDialog.show();
             return true;
         });
+
+        tallyHolder.btnModify.setOnClickListener((view) -> mPresenter.addTally(tally.getId()));
 
     }
 

@@ -21,11 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Happy birthday to one of the most important people in my life."/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/happy"/>
+            android:text="Happy everyday to one of the most important people in my life."/>
     </RelativeLayout>
 
 

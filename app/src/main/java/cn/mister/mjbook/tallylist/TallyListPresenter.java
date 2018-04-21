@@ -28,8 +28,8 @@ public class TallyListPresenter implements TallyListContract.TallyListPresenter,
     }
 
     @Override
-    public void addTally() {
-        mView.showAddTally();
+    public void addTally(String tallyId) {
+        mView.showAddTally(tallyId);
     }
 
     @Override
